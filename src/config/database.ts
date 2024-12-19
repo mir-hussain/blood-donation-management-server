@@ -9,5 +9,4 @@ const pool = mysql2
   })
   .promise();
 
-const [rows] = await pool.query("SELECT * FROM User");
-console.log(rows);
+export default pool;

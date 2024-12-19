@@ -2,8 +2,15 @@
   "name": "blood-donation-management-server",
   "module": "index.ts",
   "type": "module",
+  "scripts": {
+    "start": "node server.js",
+    "dev": "bun --hot ./src/server.ts"
+  },
   "devDependencies": {
-    "@types/bun": "latest"
+    "@types/bun": "latest",
+    "@types/cors": "^2.8.17",
+    "@types/express": "^5.0.0",
+    "typescript": "^5.7.2"
   },
   "peerDependencies": {
     "typescript": "^5.0.0"
