@@ -1,6 +1,7 @@
 import express, { type Application } from "express";
 import cors from "cors";
 import routes from "./routes";
+import notFound from "./middlewares/notFound";
 
 const app: Application = express();
 
@@ -11,5 +12,7 @@ app.use("/api/v1", routes);
 app.get("/", (req, res) => {
   res.send("Hello World");
 });
+
+app.use(notFound);
 
 export default app;
