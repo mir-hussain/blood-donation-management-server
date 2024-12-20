@@ -1,9 +1,9 @@
 import { Request, Response } from "express";
-import db from "../../config/database";
 import sendResponse from "../../utils/sendResponse";
 import { UserService } from "./user.service";
+import catchAsync from "../../utils/catchAsync";
 
-const getAllUsers = async (req: Request, res: Response) => {
+const getAllUsers = catchAsync(async (req: Request, res: Response) => {
   const result = await UserService.getAllUsersFromDb();
   sendResponse(res, {
     statusCode: 200,
@@ -11,7 +11,7 @@ const getAllUsers = async (req: Request, res: Response) => {
     message: "Users retrieved successfully",
     data: result,
   });
-};
+});
 
 export const UserController = {
   getAllUsers,
