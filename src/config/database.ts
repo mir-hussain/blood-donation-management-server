@@ -1,11 +1,12 @@
 import mysql2 from "mysql2";
+import config from ".";
 
 const db = mysql2
   .createPool({
-    host: process.env.DB_HOST,
-    user: process.env.DB_USER,
-    password: process.env.DB_PASS,
-    database: process.env.DB_NAME,
+    host: config.db_host,
+    user: config.db_user,
+    password: config.db_password,
+    database: config.db_name,
   })
   .promise();
 
