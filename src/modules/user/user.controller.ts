@@ -13,18 +13,6 @@ const getAllUsers = catchAsync(async (req: Request, res: Response) => {
   });
 });
 
-const createUser = catchAsync(async (req: Request, res: Response) => {
-  const result = await UserService.createUserInDb(req.body);
-
-  sendResponse(res, {
-    statusCode: 200,
-    success: true,
-    message: "User created successfully",
-    data: result,
-  });
-});
-
 export const UserController = {
   getAllUsers,
-  createUser,
 };
