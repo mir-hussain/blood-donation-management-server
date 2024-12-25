@@ -4,8 +4,8 @@ import db from "../../config/database";
 const createRequest = async (requestData: any) => {
   const query = `
     INSERT INTO Requests
-    (user_id, blood_type_requested, hospital_id, quantity_requested, status, request_date, is_public_request, location)
-    VALUES (?, ?, ?, ?, ?, ?, ?, ?)
+    (user_id, blood_type_requested, hospital_id, quantity_requested, status, request_date, is_public_request, location, city)
+    VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)
   `;
 
   const [result] = await db.query<ResultSetHeader>(query, [
@@ -17,6 +17,7 @@ const createRequest = async (requestData: any) => {
     requestData.request_date,
     requestData.is_public_request || true, // Default is true (public)
     requestData.location, // Location is required
+    requestData.city,
   ]);
 
   return result.insertId; // Return the ID of the created request
@@ -44,6 +45,10 @@ const getRequests = async (filters: any = {}) => {
       conditions.push("location = ?");
       params.push(filters.location);
     }
+    if (filters.city) {
+      query += ` AND city = ?`;
+      params.push(filters.city);
+    }
 
     if (conditions.length > 0) {
       query += " WHERE " + conditions.join(" AND ");
@@ -67,7 +72,7 @@ const updateRequest = async (id: number, updateData: any) => {
   const query = `
     UPDATE Requests
     SET blood_type_requested = ?, hospital_id = ?, quantity_requested = ?,
-        status = ?, request_date = ?, is_public_request = ?, location = ?
+        status = ?, request_date = ?, is_public_request = ?, location = ?, city = ?
     WHERE id = ?
   `;
   const [result] = await db.query<ResultSetHeader>(query, [
@@ -78,6 +83,7 @@ const updateRequest = async (id: number, updateData: any) => {
     updateData.request_date,
     updateData.is_public_request,
     updateData.location,
+    updateData.city,
     id,
   ]);
   return result.affectedRows > 0; // Return true if the update was successful

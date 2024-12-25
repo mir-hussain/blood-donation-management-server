@@ -62,7 +62,8 @@ CREATE TABLE Requests (
     status ENUM('pending', 'approved', 'rejected', 'fulfilled') DEFAULT 'pending',
     request_date DATE NOT NULL,
     is_public_request BOOLEAN DEFAULT FALSE,
-    location VARCHAR(255) NOT NULL, -- Added location column
+    location VARCHAR(255) NOT NULL,
+    city VARCHAR(100) NOT NULL, -- Added city column
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     FOREIGN KEY (user_id) REFERENCES User(id) ON DELETE CASCADE,
     FOREIGN KEY (hospital_id) REFERENCES Hospital(id) ON DELETE SET NULL
