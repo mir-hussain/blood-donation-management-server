@@ -11,6 +11,7 @@ CREATE TABLE User (
     dob DATE NOT NULL,
     role ENUM('admin', 'user', 'receptionist') NOT NULL,
     blood_type ENUM('A+', 'A-', 'B+', 'B-', 'AB+', 'AB-', 'O+', 'O-') NULL,
+    last_donated DATE NULL, -- New column for last donated date
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 
@@ -33,6 +34,8 @@ CREATE TABLE Hospital (
     id INT AUTO_INCREMENT PRIMARY KEY,
     name VARCHAR(255) NOT NULL,
     address VARCHAR(255) NOT NULL,
+    city VARCHAR(100) NOT NULL, -- City column
+    branch VARCHAR(100) NULL, -- New optional branch column
     contact_number VARCHAR(20),
     created_by_admin_id INT,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
@@ -59,6 +62,7 @@ CREATE TABLE Requests (
     status ENUM('pending', 'approved', 'rejected', 'fulfilled') DEFAULT 'pending',
     request_date DATE NOT NULL,
     is_public_request BOOLEAN DEFAULT FALSE,
+    location VARCHAR(255) NOT NULL, -- Added location column
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     FOREIGN KEY (user_id) REFERENCES User(id) ON DELETE CASCADE,
     FOREIGN KEY (hospital_id) REFERENCES Hospital(id) ON DELETE SET NULL

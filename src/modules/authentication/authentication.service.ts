@@ -6,6 +6,7 @@ import { RowDataPacket } from "mysql2";
 import { IUser } from "../../interface/user";
 
 const loginUser = async (email: string, password: string) => {
+  console.log(email, password);
   const [rows] = await db.query<RowDataPacket[]>(
     "SELECT * FROM user WHERE email = ?",
     [email]
@@ -29,6 +30,9 @@ const loginUser = async (email: string, password: string) => {
     {
       id: user.id,
       role: user.role,
+      name: user.name,
+      email: user.email,
+      phone: user.phone,
     },
     config.jwt_secret as string,
     { expiresIn: "1w" }
