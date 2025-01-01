@@ -25,21 +25,21 @@ const createRequest = async (requestData: any) => {
 
 const getRequests = async (filters: any = {}) => {
   let query = `
-    SELECT
-      Requests.*,
-      JSON_OBJECT(
-        'id', User.id,
-        'name', User.name,
-        'email', User.email,
-        'phone', User.phone,
-        'dob', User.dob,
-        'role', User.role,
-        'blood_type', User.blood_type,
-        'last_donated', User.last_donated
-      ) AS user
-    FROM Requests
-    LEFT JOIN User ON Requests.user_id = User.id
-  `;
+        SELECT
+            Requests.*,
+            JSON_OBJECT(
+                'id', User.id,
+                'name', User.name,
+                'email', User.email,
+                'phone', User.phone,
+                'dob', User.dob,
+                'role', User.role,
+                'blood_type', User.blood_type,
+                'last_donated', User.last_donated
+            ) AS user
+        FROM Requests
+        LEFT JOIN User ON Requests.user_id = User.id
+    `;
   const params: any[] = [];
 
   if (Object.keys(filters).length > 0) {
@@ -61,8 +61,12 @@ const getRequests = async (filters: any = {}) => {
       params.push(filters.location);
     }
     if (filters.city) {
-      query += ` AND city = ?`;
-      params.push(filters.city);
+      conditions.push("city LIKE ?");
+      params.push(`%${filters.city}%`);
+    }
+    if (filters.blood_type_requested !== undefined) {
+      conditions.push("blood_type_requested = ?");
+      params.push(filters.blood_type_requested);
     }
 
     if (conditions.length > 0) {

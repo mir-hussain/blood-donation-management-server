@@ -15,7 +15,7 @@ const createHospital = catchAsync(async (req: Request, res: Response) => {
 });
 
 const getAllHospitals = catchAsync(async (req: Request, res: Response) => {
-  const result = await HospitalService.getAllHospitalsFromDb();
+  const result = await HospitalService.getAllHospitalsFromDb(req.query);
   sendResponse(res, {
     statusCode: 200,
     success: true,

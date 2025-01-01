@@ -20,9 +20,29 @@ const createHospitalInDb = async (hospitalData: IHospital) => {
   return result.insertId;
 };
 
-const getAllHospitalsFromDb = async () => {
-  const query = `SELECT * FROM Hospital`;
-  const [rows] = await db.query<RowDataPacket[]>(query);
+const getAllHospitalsFromDb = async (queryParams: {
+  name?: string;
+  city?: string;
+}) => {
+  let query = `SELECT * FROM Hospital`;
+  const params: string[] = [];
+  const conditions: string[] = [];
+
+  if (queryParams.name) {
+    conditions.push(`name LIKE ?`);
+    params.push(`%${queryParams.name}%`);
+  }
+
+  if (queryParams.city) {
+    conditions.push(`city LIKE ?`);
+    params.push(`%${queryParams.city}%`);
+  }
+
+  if (conditions.length > 0) {
+    query += ` WHERE ` + conditions.join(` AND `);
+  }
+
+  const [rows] = await db.query<RowDataPacket[]>(query, params);
   return rows;
 };
 

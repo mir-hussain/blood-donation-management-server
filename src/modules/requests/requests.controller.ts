@@ -15,7 +15,7 @@ const createRequest = catchAsync(async (req: Request, res: Response) => {
 });
 
 const getRequests = catchAsync(async (req: Request, res: Response) => {
-  const filters = req.query; // Example: ?user_id=1&is_public_request=true
+  const filters = req.query;
   const requests = await RequestService.getRequests(filters);
   sendResponse(res, {
     statusCode: 200,
