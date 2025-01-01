@@ -24,7 +24,22 @@ const createRequest = async (requestData: any) => {
 };
 
 const getRequests = async (filters: any = {}) => {
-  let query = "SELECT * FROM Requests";
+  let query = `
+    SELECT
+      Requests.*,
+      JSON_OBJECT(
+        'id', User.id,
+        'name', User.name,
+        'email', User.email,
+        'phone', User.phone,
+        'dob', User.dob,
+        'role', User.role,
+        'blood_type', User.blood_type,
+        'last_donated', User.last_donated
+      ) AS user
+    FROM Requests
+    LEFT JOIN User ON Requests.user_id = User.id
+  `;
   const params: any[] = [];
 
   if (Object.keys(filters).length > 0) {
