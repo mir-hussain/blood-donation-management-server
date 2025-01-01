@@ -8,7 +8,7 @@ import { IUser } from "../../interface/user";
 const loginUser = async (email: string, password: string) => {
   console.log(email, password);
   const [rows] = await db.query<RowDataPacket[]>(
-    "SELECT * FROM user WHERE email = ?",
+    "SELECT * FROM User WHERE email = ?",
     [email]
   );
   if (rows.length === 0) {
