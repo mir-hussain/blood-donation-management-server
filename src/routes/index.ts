@@ -4,6 +4,7 @@ import { AuthenticationRoutes } from "../modules/authentication/authentication.r
 import { AdminRoutes } from "../modules/admin/admin.route";
 import { HospitalRoutes } from "../modules/hospital/hospital.route";
 import { RequestRoutes } from "../modules/requests/requests.router";
+import { DonationRoutes } from "../modules/donations/donations.router";
 
 const routes = Router();
 
@@ -27,6 +28,10 @@ const moduleRoutes = [
   {
     path: "/request",
     route: RequestRoutes,
+  },
+  {
+    path: "/donation",
+    route: DonationRoutes,
   },
 ];
 
