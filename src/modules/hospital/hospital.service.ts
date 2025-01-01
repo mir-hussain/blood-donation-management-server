@@ -4,12 +4,14 @@ import { IHospital } from "../../interface/hospital";
 
 const createHospitalInDb = async (hospitalData: IHospital) => {
   const query = `
-    INSERT INTO Hospital (name, address, contact_number, created_by_admin_id)
-    VALUES (?, ?, ?, ?)
+    INSERT INTO Hospital (name, address, city, branch, contact_number, created_by_admin_id)
+    VALUES (?, ?, ?, ?, ?, ?)
   `;
   const params = [
     hospitalData.name,
     hospitalData.address,
+    hospitalData.city,
+    hospitalData.branch,
     hospitalData.contact_number,
     hospitalData.created_by_admin_id,
   ];
