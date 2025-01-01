@@ -34,8 +34,8 @@ CREATE TABLE Hospital (
     id INT AUTO_INCREMENT PRIMARY KEY,
     name VARCHAR(255) NOT NULL,
     address VARCHAR(255) NOT NULL,
-    city VARCHAR(100) NOT NULL, -- City column
-    branch VARCHAR(100) NULL, -- New optional branch column
+    city VARCHAR(100) NOT NULL,
+    branch VARCHAR(100) NULL,
     contact_number VARCHAR(20),
     created_by_admin_id INT,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
