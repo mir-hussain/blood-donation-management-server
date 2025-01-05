@@ -15,6 +15,19 @@ CREATE TABLE User (
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 
+-- Create the Hospital table (move before Admin and Receptionist)
+CREATE TABLE Hospital (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    name VARCHAR(255) NOT NULL,
+    address VARCHAR(255) NOT NULL,
+    city VARCHAR(100) NOT NULL,
+    branch VARCHAR(100) NULL,
+    contact_number VARCHAR(20),
+    created_by_admin_id INT,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (created_by_admin_id) REFERENCES User(id) ON DELETE SET NULL
+);
+
 -- Create the Admin table
 CREATE TABLE Admin (
     id INT PRIMARY KEY,
@@ -27,19 +40,6 @@ CREATE TABLE Receptionist (
     assigned_hospital_id INT,
     FOREIGN KEY (id) REFERENCES User(id) ON DELETE CASCADE,
     FOREIGN KEY (assigned_hospital_id) REFERENCES Hospital(id) ON DELETE SET NULL
-);
-
--- Create the Hospital table
-CREATE TABLE Hospital (
-    id INT AUTO_INCREMENT PRIMARY KEY,
-    name VARCHAR(255) NOT NULL,
-    address VARCHAR(255) NOT NULL,
-    city VARCHAR(100) NOT NULL,
-    branch VARCHAR(100) NULL,
-    contact_number VARCHAR(20),
-    created_by_admin_id INT,
-    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    FOREIGN KEY (created_by_admin_id) REFERENCES Admin(id) ON DELETE SET NULL
 );
 
 -- Create the Storage table
@@ -69,6 +69,19 @@ CREATE TABLE Requests (
     FOREIGN KEY (hospital_id) REFERENCES Hospital(id) ON DELETE SET NULL
 );
 
+-- for future update
+-- CREATE TABLE Requests (
+--     id INT AUTO_INCREMENT PRIMARY KEY,
+--     user_id INT NOT NULL,
+--     blood_type_requested ENUM('A+', 'A-', 'B+', 'B-', 'AB+', 'AB-', 'O+', 'O-') NOT NULL,
+--     quantity_requested INT NOT NULL,
+--     status ENUM('pending', 'approved', 'rejected', 'fulfilled') DEFAULT 'pending',
+--     request_date DATE NOT NULL,
+--     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+--     FOREIGN KEY (user_id) REFERENCES User(id) ON DELETE CASCADE
+-- );
+
+
 -- Create the Donations table
 CREATE TABLE Donations (
     id INT AUTO_INCREMENT PRIMARY KEY,
@@ -91,4 +104,16 @@ CREATE TABLE Request_Donations (
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     FOREIGN KEY (request_id) REFERENCES Requests(id) ON DELETE CASCADE,
     FOREIGN KEY (donation_id) REFERENCES Donations(id) ON DELETE CASCADE
+);
+
+CREATE TABLE Hospital_Requests (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    hospital_id INT NOT NULL,
+    blood_type_requested ENUM('A+', 'A-', 'B+', 'B-', 'AB+', 'AB-', 'O+', 'O-') NOT NULL,
+    quantity_requested INT NOT NULL,
+    reason VARCHAR(255), -- Optional: Add a reason for the request
+    status ENUM('pending', 'approved', 'rejected', 'fulfilled') DEFAULT 'pending',
+    request_date DATE NOT NULL,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (hospital_id) REFERENCES Hospital(id) ON DELETE CASCADE
 );

@@ -79,7 +79,23 @@ const getRequests = async (filters: any = {}) => {
 };
 
 const getRequestById = async (id: number) => {
-  const query = "SELECT * FROM Requests WHERE id = ?";
+  const query = `
+        SELECT
+            Requests.*,
+            JSON_OBJECT(
+                'id', User.id,
+                'name', User.name,
+                'email', User.email,
+                'phone', User.phone,
+                'dob', User.dob,
+                'role', User.role,
+                'blood_type', User.blood_type,
+                'last_donated', User.last_donated
+            ) AS user
+        FROM Requests
+        LEFT JOIN User ON Requests.user_id = User.id
+        WHERE Requests.id = ?
+    `;
   const [rows] = await db.query<RowDataPacket[]>(query, [id]);
   if (rows.length === 0) {
     throw new Error("Request not found");

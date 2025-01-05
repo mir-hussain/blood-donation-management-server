@@ -5,6 +5,8 @@ import { AdminRoutes } from "../modules/admin/admin.route";
 import { HospitalRoutes } from "../modules/hospital/hospital.route";
 import { RequestRoutes } from "../modules/requests/requests.router";
 import { DonationRoutes } from "../modules/donations/donations.router";
+import { ReceptionistRoutes } from "../modules/receptionist/reciptionist.route";
+import { StorageRoutes } from "../modules/storage/storage.route";
 
 const routes = Router();
 
@@ -32,6 +34,14 @@ const moduleRoutes = [
   {
     path: "/donation",
     route: DonationRoutes,
+  },
+  {
+    path: "/receptionist",
+    route: ReceptionistRoutes,
+  },
+  {
+    path: "/storage",
+    route: StorageRoutes,
   },
 ];
 
