@@ -7,6 +7,7 @@ import { RequestRoutes } from "../modules/requests/requests.router";
 import { DonationRoutes } from "../modules/donations/donations.router";
 import { ReceptionistRoutes } from "../modules/receptionist/reciptionist.route";
 import { StorageRoutes } from "../modules/storage/storage.route";
+import { HospitalRequestsRoutes } from "../modules/hospitalRequest/hospitalRequest.route";
 
 const routes = Router();
 
@@ -42,6 +43,10 @@ const moduleRoutes = [
   {
     path: "/storage",
     route: StorageRoutes,
+  },
+  {
+    path: "/hospital-request",
+    route: HospitalRequestsRoutes,
   },
 ];
 
